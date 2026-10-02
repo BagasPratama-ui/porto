@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bagas Pratama Adhi — Insinyur Sipil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EDF1F4;
+    --bg-raised: #FFFFFF;
+    --ink: #17232E;
+    --ink-soft: #46566A;
+    --line: #4A6B85;
+    --line-faint: rgba(23,35,46,0.14);
+    --grid-line: rgba(23,35,46,0.055);
+    --accent: #D65A2E;
+    --accent-ink: #FFFFFF;
+    --caution: #E8B33D;
+    --steel: #7C8894;
+    --shadow: rgba(23,35,46,0.10);
+    --focus: #2E6F95;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #10171F;
+      --bg-raised: #17222C;
+      --ink: #E9EEF2;
+      --ink-soft: #ABB9C6;
+      --line: #6E93AE;
+      --line-faint: rgba(233,238,242,0.16);
+      --grid-line: rgba(233,238,242,0.06);
+      --accent: #E97748;
+      --accent-ink: #10171F;
+      --caution: #E8B33D;
+      --steel: #8A97A3;
+      --shadow: rgba(0,0,0,0.35);
+      --focus: #7FB0CE;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #10171F;
+    --bg-raised: #17222C;
+    --ink: #E9EEF2;
+    --ink-soft: #ABB9C6;
+    --line: #6E93AE;
+    --line-faint: rgba(233,238,242,0.16);
+    --grid-line: rgba(233,238,242,0.06);
+    --accent: #E97748;
+    --accent-ink: #10171F;
+    --caution: #E8B33D;
+    --steel: #8A97A3;
+    --shadow: rgba(0,0,0,0.35);
+    --focus: #7FB0CE;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 32px 32px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 32px 32px,
+      var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--steel);
+  }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line-faint);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .nav-mark {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .nav-mark .sheet-no { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--ink-soft);
+    transition: color .15s ease;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-toggle { display: none; }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  .nav-logo {
+    height: 50px;
+    width: auto;
+    display: block;
+  }
+
+  /* ---------- HERO ---------- */
+  header.hero {
+    position: relative;
+    padding: 96px 0 64px;
+    overflow: hidden;
+  }
+  .dim-line {
+    position: absolute;
+    background: var(--line-faint);
+  }
+  .hero-frame {
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--line);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: rise .6s ease forwards;
+  }
+  .hero-eyebrow .tick { width: 28px; height: 1px; background: var(--line); display: inline-block; }
+
+  h1.hero-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.02;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: rise .7s ease .08s forwards;
+  }
+
+  .hero-role {
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 0 0 40px;
+    opacity: 0;
+    animation: rise .7s ease .18s forwards;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-eyebrow, h1.hero-name, .hero-role, .titleblock { animation: none !important; opacity: 1 !important; transform: none !important; }
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: rise .7s ease .26s forwards;
+  }
+  .btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 12px 22px;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    transition: background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .btn-fill { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn-fill:hover { transform: translateY(-1px); }
+  .btn-outline { color: var(--ink); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Title block, drawing-sheet style */
+  .titleblock {
+    margin-top: 64px;
+    border: 1px solid var(--line-faint);
+    border-radius: 2px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--bg-raised);
+    box-shadow: 0 1px 0 var(--shadow);
+    opacity: 0;
+    animation: rise .7s ease .34s forwards;
+  }
+  .tb-cell {
+    padding: 14px 18px;
+    border-right: 1px solid var(--line-faint);
+  }
+  .tb-cell:last-child { border-right: none; }
+  .tb-cell .label { display: block; margin-bottom: 4px; }
+  .tb-cell .val { font-size: 14px; font-weight: 500; }
+  @media (max-width: 700px) {
+    .titleblock { grid-template-columns: repeat(2, 1fr); }
+    .tb-cell:nth-child(2) { border-right: none; }
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section { padding: 88px 0; border-top: 1px solid var(--line-faint); }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+  .sec-num { font-family: 'IBM Plex Mono', monospace; color: var(--accent); font-size: 14px; }
+  .sec-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0; }
+  .sec-rule { flex: 1; height: 1px; background: var(--line-faint); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .about-grid p { color: var(--ink-soft); max-width: 60ch; margin: 0 0 16px; }
+  .about-facts { display: grid; gap: 18px; }
+  .fact { border-left: 2px solid var(--accent); padding-left: 16px; }
+  .fact .val { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 600; display: block; }
+  .fact .label { margin-top: 2px; display: block; }
+  @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--line-faint);
+  }
+  .skill-col {
+    padding: 28px 26px;
+    border-right: 1px solid var(--line-faint);
+  }
+  .skill-col:last-child { border-right: none; }
+  .skill-col h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--line);
+    font-weight: 500;
+    margin: 0 0 18px;
+  }
+  .skill-col ul { list-style: none; margin: 0; padding: 0; }
+  .skill-col li {
+    padding: 9px 0;
+    border-top: 1px solid var(--line-faint);
+    font-size: 14.5px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .skill-col li:first-child { border-top: none; }
+  .skill-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--steel); white-space: nowrap; }
+  @media (max-width: 760px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .skill-col { border-right: none; border-bottom: 1px solid var(--line-faint); }
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .project-sheet {
+    background: var(--bg-raised);
+    border: 1px solid var(--line-faint);
+    border-radius: 2px;
+    padding: 26px 26px 22px;
+    transition: border-color .15s ease, transform .15s ease;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .project-sheet:hover { border-color: var(--line); transform: translateY(-2px); }
+  .ps-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .ps-num { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); }
+  .ps-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; margin: 4px 0 10px; }
+  .ps-desc { color: var(--ink-soft); font-size: 14.5px; margin: 0 0 16px; }
+  .ps-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ps-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 9px;
+    border: 1px solid var(--line-faint);
+    border-radius: 2px;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 760px) { .projects-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- EDUCATION / TIMELINE ---------- */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px; top: 6px; bottom: 6px;
+    width: 1px;
+    background: var(--line-faint);
+  }
+  .tl-item { position: relative; padding-bottom: 40px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: attr(data-idx);
+    position: absolute;
+    left: -32px; top: 0;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    font-size: 0;
+  }
+  .tl-when { font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: var(--steel); }
+  .tl-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 600; margin: 4px 0 6px; }
+  .tl-desc { color: var(--ink-soft); font-size: 14.5px; margin: 0; max-width: 62ch; }
+
+  /* ---------- CONTACT / FOOTER TITLEBLOCK ---------- */
+  footer {
+    border-top: 1px solid var(--line-faint);
+    padding: 72px 0 40px;
+  }
+  .contact-head { text-align: left; margin-bottom: 40px; }
+  .contact-head h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 14px; }
+  .contact-head p { color: var(--ink-soft); max-width: 50ch; margin: 0; }
+  .contact-block {
+    border: 1px solid var(--line-faint);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .cb-cell { padding: 20px 22px; border-right: 1px solid var(--line-faint); border-top: 1px solid var(--line-faint); }
+  .cb-cell:nth-child(-n+4) { border-top: none; }
+  .cb-cell:nth-child(4n) { border-right: none; }
+  .cb-cell a { text-decoration: none; }
+  .cb-cell a:hover { color: var(--accent); }
+  .cb-cell .val { font-size: 14.5px; font-weight: 500; word-break: break-word; }
+  @media (max-width: 700px) {
+    .contact-block { grid-template-columns: repeat(2, 1fr); }
+    .cb-cell:nth-child(-n+4) { border-top: 1px solid var(--line-faint); }
+    .cb-cell:nth-child(1), .cb-cell:nth-child(2) { border-top: none; }
+    .cb-cell:nth-child(4n) { border-right: 1px solid var(--line-faint); }
+    .cb-cell:nth-child(2n) { border-right: none; }
+  }
+  .foot-note { margin-top: 40px; font-size: 12.5px; color: var(--steel); font-family: 'IBM Plex Mono', monospace; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-mark">
+      <img src="logo/BAGAS LOGO LANDSCAPE.png" alt="Logo Bagas" class="nav-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">Tentang</a></li>
+      <li><a href="#skills">Keahlian</a></li>
+      <li><a href="#projects">Proyek</a></li>
+      <li><a href="#education">Pendidikan</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-frame">
+    <div class="hero-eyebrow"><span class="tick"></span>PORTOFOLIO ———</div>
+    <h1 class="hero-name">Bagas Pratama<br>Adhi</h1>
+    <p class="hero-role">Lulusan baru Teknik Sipil dengan minat pada desain struktur dan gambar teknik. Dengan pengalaman pada proyek berskala kecil dan menengah.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-fill">Lihat Proyek</a>
+      <a href="#contact" class="btn btn-outline">Hubungi Saya</a>
+    </div>
+
+    <div class="titleblock">
+      <div class="tb-cell"><span class="label">SEKOLAH</span><span class="val">SMKN 2 Salatiga</span></div>
+      <div class="tb-cell"><span class="label">LULUS</span><span class="val">Mei 2026</span></div>
+      <div class="tb-cell"><span class="label">JURUSAN</span><span class="val">Konstruksi Gedung Sanitasi &amp; Perawatan</span></div>
+      <div class="tb-cell"><span class="label">DOMISILI</span><span class="val">Salatiga, Jawa Tengah, Indonesia</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">Tentang</h2><span class="sec-rule"></span></div>
+    <div class="about-grid">
+      <div>
+        <p>Saya lulusan Teknik Sipil dengan pengalaman di bidang survey, gambar teknik, pengawasan lapangan, dan perencanaan bangunan, yang saya bangun ketika magang. Saya memiliki minat pada bidang analisa struktur beton bertulang, dapat membuat gambar hasil pengukuran dari Total Station, membuat RAB, dan membaca gambar kerja dengan teliti.</p>
+        <p>Saya sudah memulai bisnis menjadi drafter freelance sejak kelas 4 SMK, sehingga saya memiliki pengalaman dalam hal perancangan bangunan baik rumah tinggal, ruko 2 lantai, dan rumah kos 2 lantai</p>
+      </div>
+      <div class="about-facts">
+        <div class="fact"><span class="val">87,04</span><span class="label">RATA-RATA NILAI IJAZAH</span></div>
+        <div class="fact"><span class="val">10 bulan</span><span class="label">MAGANG LAPANGAN &amp; DESAIN</span></div>
+        <div class="fact"><span class="val">15 Lebih</span><span class="label">PROYEK DIKERJAKAN</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Keahlian</h2><span class="sec-rule"></span></div>
+    <div class="skills-grid">
+      <div class="skill-col">
+        <h3>PERANGKAT LUNAK</h3>
+        <ul>
+          <li>AutoCAD 2D <span class="skill-tag">MAHIR</span></li>
+          <li>SKETCHUP <span class="skill-tag">MAHIR</span></li>
+          <li>SAP2000 <span class="skill-tag">DASAR</span></li>
+          <li>Revit Stuktur <span class="skill-tag">MENENGAH</span></li>
+          <li>Microsoft Excel <span class="skill-tag">DASAR</span></li>
+          <li>D5 Render <span class="skill-tag">DASAR</span></li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3>TEKNIS</h3>
+        <ul>
+          <li>Membaca gambar kerja</li>
+          <li>Desain 3d</li>
+          <li>Perhitungan volume &amp; estimasi biaya</li>
+          <li>Gambar teknik &amp; detailing</li>
+          <li>Dasar pengawas lapangan</li>
+        
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3>GAYA KERJA</h3>
+        <ul>
+          <li>Koordinasi antar tim</li>
+          <li>Cepat &amp; teliti dalam belajar hal baru</li>
+          <li>Nyaman bekerja di lapangan</li>
+          <li>Teliti memeriksa detail</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Proyek</h2><span class="sec-rule"></span></div>
+    <div class="projects-grid">
+
+      <a href="proyek-1.html" class="project-sheet">
+        <div class="ps-head"><span class="ps-num">SHT-01</span></div>
+        <h3 class="ps-title">Resto &amp; Cafe luas 1128 m2 Desain &amp; Perencanaan</h3>
+        <p class="ps-desc">Mendesain bangunan resto, cafe, mess untuk karyawan, serta merancang sistem MEP,Struktur sederhana. Membuat Desain 3D serta Rendering untuk visualisasi</p>
+        <div class="ps-meta">
+          <span class="ps-chip">Sketchup</span>
+          <span class="ps-chip">AutoCAD</span>
+          <span class="ps-chip">D5 Render</span>
+        </div>
+      </a>
+
+      <a href="proyek-2.html" class="project-sheet">
+        <div class="ps-head"><span class="ps-num">SHT-02</span></div>
+        <h3 class="ps-title">Gambar Detail Engineering Design (DED) Renovasi Rumah 2 Lantai</h3>
+        <p class="ps-desc">Membuat denah beserta detail untuk renovasi rumah 2 lantai. Membantu perencana membuat gambar kerja Arsitektur, Struktur, dan MEP untuk acuan pelaksanaan</p>
+        <div class="ps-meta">
+          <span class="ps-chip">AutoCAD</span>
+          <span class="ps-chip">Desain Beton Bertulang</span>
+        </div>
+      </a>
+
+      <a href="proyek-3.html" class="project-sheet">
+        <div class="ps-head"><span class="ps-num">SHT-03</span></div>
+        <h3 class="ps-title">Gambar Struktur Rumah Kos 3 Lantai</h3>
+        <p class="ps-desc">Membuat gambar struktur kos 3 lantai beserta detail pembesian sesuai hasil analisa struktur oleh insinyur.</p>
+        <div class="ps-meta">
+          <span class="ps-chip">AutoCAD</span>
+          <span class="ps-chip">Sketchup</span>
+          <span class="ps-chip">Struktur Beton</span>
+        </div>
+      </a>
+
+      <a href="proyek-4.html" class="project-sheet">
+        <div class="ps-head"><span class="ps-num">SHT-04</span></div>
+        <h3 class="ps-title">Desain 3D &amp; Preliminery Design Struktur Kos &amp; Cafe 2 Lantai </h3>
+        <p class="ps-desc">Membuat model 3D untuk fasad beserta bangunan. Serta membuat design struktur beton bertulang menggunakan metode Preliminery Design yang selanjutnya diserahkan kepada insinyur untuk dihitung ulang. </p>
+        <div class="ps-meta">
+          <span class="ps-chip">AutoCAD</span>
+          <span class="ps-chip">Sketchup</span>
+          <span class="ps-chip">Struktur Beton</span>
+        </div>
+      </a>
+
+       <a href="proyek-5.html" class="project-sheet">
+        <div class="ps-head"><span class="ps-num">SHT-05</span></div>
+        <h3 class="ps-title">Magang Kontraktor - Survei Konstruksi Gedung 4 Lantai</h3>
+        <p class="ps-desc">Membantu surveyor membuat titik acuan (bench mark),stake out titik fondasi, as kolom. Membuat elevasi pinjaman menggunakan waterpass. Pengoperasian TotalStation untuk mencari data situasi serta pengolahan data hasil pengukuran.</p>
+        <div class="ps-meta">
+          <span class="ps-chip">Survei</span>
+          <span class="ps-chip">AutoCAD</span>
+          <span class="ps-chip">Total Station</span>
+          <span class="ps-chip">Ms. Excel</span>
+        </div>
+      </a>
+
+       <a href="proyek-6.html" class="project-sheet">
+        <div class="ps-head"><span class="ps-num">SHT-06</span></div>
+        <h3 class="ps-title">Magang Kontraktor - Survei Awal &amp; Menentukan Koordinat 5 Gedung</h3>
+        <p class="ps-desc">Terlibat penuh sejak awal pengukuran lahan, menentukan lokasi gedung. Membantu surveyor dalam menyiapkan data koordinat untuk stake out lokasi gedung, hingga di akhir melakukan pengambilan  data situasi setelah proyek selesai.</p>
+        <div class="ps-meta">
+          <span class="ps-chip">Survei</span>
+          <span class="ps-chip">AutoCAD</span>
+          <span class="ps-chip">Total Station</span>
+          <span class="ps-chip">Ms. Excel</span>
+        </div>
+      </a>
+
+      <a href="proyek-6.html" class="project-sheet">
+        <div class="ps-head"><span class="ps-num">SHT-07</span></div>
+        <h3 class="ps-title">Desain &amp; Gambar Kerja Rumah 1 Lantai</h3>
+        <p class="ps-desc">Membuat desain 3D dan gambar kerja untuk rumah type 40</p>
+        <div class="ps-meta">
+          <span class="ps-chip">Sketchup</span>
+          <span class="ps-chip">AutoCAD</span>
+          <span class="ps-chip">Twinmotion</span>
+          
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">Pendidikan</h2><span class="sec-rule"></span></div>
+    <div class="timeline">
+      <div class="tl-item" data-idx="1">
+        <div class="tl-when">2022 — 2026</div>
+        <h3 class="tl-title">SMK Konstruksi Gedung Sanitasi &amp; Sanitasi — SMKN 2 Salatiga</h3>
+        <p class="tl-desc">Fokus mempelajari mata pelajaran produktif meliputi Menggambar Teknik Bangunan (manual & AutoCAD), Konstruksi Bangunan Gedung, Ilmu Ukur Tanah, Perawatan Bangunan, serta Estimasi Biaya Konstruksi (RAB).</p>
+      </div>
+      <div class="tl-item" data-idx="2">
+        <div class="tl-when">2022 — 2023</div>
+        <h3 class="tl-title">Sie Sastra &amp; Budaya — OSIS SMKN 2 Salatiga</h3>
+        <p class="tl-desc">Bertanggung jawab mengkoordinasikan kegiatan bidang sastra dan budaya sekolah, termasuk pentas seni, pameran karya siswa, serta berkoordinasi dengan anggota lain dalam pelaksanaan acara sekolah.</p>
+      </div>
+      <div class="tl-item" data-idx="3">
+        <div class="tl-when">2023 — 2024</div>
+        <h3 class="tl-title">Sie Budi Pekerti Luhur — OSIS SMKN 2 Salatiga</h3>
+        <p class="tl-desc">Bertanggung jawab mendukung kegiatan kedisiplinan siswa, termasuk sosialisasi tata tertib, kegiatan sosial sekolah, serta berkoordinasi dengan anggota lain dalam pelaksanaan acara sekolah.</p>
+      </div>
+      <div class="tl-item" data-idx="4">
+        <div class="tl-when">2022</div>
+        <h3 class="tl-title">Peserta — BMCHS CIVILWEEK — UNS</h3>
+        <p class="tl-desc">Ikut serta mewakili sekolah dalam kompetisi Brigde Modelling Competition for High School tingkat nasional, mengasah kemampuan problem solving, fabrikasi, analisa struktur dan mekanika teknik.</p>
+      </div>
+      <div class="tl-item" data-idx="4">
+        <div class="tl-when">2023</div>
+        <h3 class="tl-title">Peserta — BMCHS CIVILWEEK — UNS</h3>
+        <p class="tl-desc">Ikut serta mewakili sekolah dalam kompetisi Brigde Modelling Competition for High School tingkat nasional, mengasah kemampuan penulisan proposal, analisa struktur menggunakan SAP2000.</p>
+      </div>
+      <div class="tl-item" data-idx="4">
+        <div class="tl-when">2024</div>
+        <h3 class="tl-title">Peserta — BDC — UNISSULA</h3>
+        <p class="tl-desc">Ikut serta mewakili sekolah dalam kompetisi Brigde Design Competition tingkat nasional, mengasah kemampuan analisa struktur menggunakan SAP2000, fabrikasi, mekanika teknik.</p>
+      </div>
+      <div class="tl-item" data-idx="4">
+        <div class="tl-when">2024</div>
+        <h3 class="tl-title">Peserta — LKS — Dinas Pendidikan dan Kebudayaan Provinsi Jawa Tengah</h3>
+        <p class="tl-desc">Ikut serta mewakili sekolah dalam Lomba Kompetensi Siswa tingkat provinsi Jawa Tengah cabang lomba Cabinet Making, mengasah kemampuan memahami gambar, pemilihan material, teknik sambungan kayu, ketelitian, kesabaran, penggunaan alat baik manual maupun listrik.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-head">
+      <p>Terbuka untuk posisi junior drafter, helper surveyor, dan junior 3D modeler BIM. Hubungi saya langsung atau terhubung lewat LinkedIn.</p>
+    </div>
+    <div class="contact-block">
+      <div class="cb-cell"><span class="label">EMAIL</span><a href="mailto:adhisoe.19@gmail.com"><span class="val">adhisoe.19@gmail.com</span></a></div>
+      <div class="cb-cell"><span class="label">TELEPON</span><a href="tel:+6288216424797"><span class="val">+62 882-1642-4797</span></a></div>
+      <div class="cb-cell"><span class="label">LINKEDIN</span><a href="#"><span class="val">www.linkedin.com/in/bagaspratamaadhi</span></a></div>
+      <div class="cb-cell"><span class="label">LOKASI</span><span class="val">Salatiga, Indonesia</span></div>
+    </div>
+    <div class="foot-note">REV 01 — TERAKHIR DIPERBARUI SEP 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
